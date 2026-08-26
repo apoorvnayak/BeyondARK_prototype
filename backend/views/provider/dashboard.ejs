@@ -1,0 +1,90 @@
+<section class="section">
+  <div class="wrap">
+    <h1>Artisan dashboard</h1>
+
+    <% const vs = currentUser.providerProfile.verificationStatus; %>
+    <% if (vs === 'pending_review') { %>
+      <div class="status-banner pending">
+        <div>
+          <strong>Verification in progress.</strong>
+          <p style="margin:2px 0 0">Our team is reviewing your details. You'll be able to create experiences once verified.</p>
+        </div>
+      </div>
+    <% } else if (vs === 'rejected') { %>
+      <div class="status-banner rejected">
+        <div>
+          <strong>Your submission needs changes.</strong>
+          <p style="margin:2px 0 0"><%= currentUser.providerProfile.verificationNote %></p>
+        </div>
+        <a href="/provider/onboarding" class="btn btn-outline btn-sm">Re-submit</a>
+      </div>
+    <% } else if (vs === 'verified') { %>
+      <div class="status-banner verified">
+        <div>
+          <%- include('../partials/verified-badge') %>
+          <p style="margin:6px 0 0">You're all set. Create experiences for travellers to discover.</p>
+        </div>
+        <a href="/provider/experiences/new" class="btn btn-primary btn-sm">+ New experience</a>
+      </div>
+    <% } %>
+
+    <div class="section-head">
+      <h2 style="margin:0">Your experiences</h2>
+    </div>
+    <% if (experiences.length === 0) { %>
+      <div class="empty-state">
+        <p><%= verified ? "You haven't created any experiences yet." : "Create your first experience once you're verified." %></p>
+      </div>
+    <% } else { %>
+      <table class="list-table">
+        <thead><tr><th>Title</th><th>Price</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <% experiences.forEach(function(e) { %>
+            <tr>
+              <td><%= e.title %></td>
+              <td>₹<%= e.price %> <span class="muted"><%= e.priceUnit %></span></td>
+              <td><span class="pill pill-<%= e.status === 'published' ? 'confirmed' : (e.status === 'rejected' ? 'cancelled' : 'pending') %>"><%= e.status.replace('_',' ') %></span></td>
+              <td><a href="/provider/experiences/<%= e.id %>">View</a></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+
+    <div class="section-head" style="margin-top:36px">
+      <h2 style="margin:0">Pending booking requests</h2>
+      <a href="/provider/bookings" class="muted" style="font-size:0.85rem">View all bookings &rarr;</a>
+    </div>
+    <% if (pendingBookings.length === 0) { %>
+      <div class="empty-state"><p>No pending requests right now.</p></div>
+    <% } else { %>
+      <% pendingBookings.forEach(function(b) { %>
+        <div class="booking-card">
+          <div class="booking-card-head">
+            <div>
+              <strong><%= b.experience.title %></strong>
+              <p class="muted" style="margin:2px 0 0">Requested by <%= b.tourist.name %> · <%= b.requestedDate %> at <%= b.requestedTime %></p>
+            </div>
+            <span class="pill pill-pending">pending</span>
+          </div>
+          <div class="booking-actions">
+            <form action="/provider/bookings/<%= b.id %>/accept" method="POST">
+              <button type="submit" class="btn btn-secondary btn-sm">Accept</button>
+            </form>
+          </div>
+          <form action="/provider/bookings/<%= b.id %>/counter" method="POST" class="counter-form">
+            <div class="field">
+              <label>Suggest a different date</label>
+              <input type="date" name="counterDate" required />
+            </div>
+            <div class="field">
+              <label>Time</label>
+              <input type="time" name="counterTime" required />
+            </div>
+            <button type="submit" class="btn btn-outline btn-sm">Suggest instead</button>
+          </form>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</section>

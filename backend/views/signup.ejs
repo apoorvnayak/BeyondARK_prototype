@@ -1,0 +1,32 @@
+<section class="section">
+  <div class="wrap">
+    <div class="form-card">
+      <h2 class="text-center">Join BeyondArk</h2>
+      <p class="text-center muted">Create an account as a traveller or an artisan.</p>
+
+      <% if (googleEnabled) { %>
+        <a href="/auth/google" class="btn btn-outline btn-block">Continue with Google</a>
+        <hr class="divider" />
+      <% } %>
+
+      <form action="/signup" method="POST">
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" minlength="6" required />
+        <p class="field-hint">At least 6 characters.</p>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-block">Create account</button>
+        </div>
+      </form>
+      <p class="text-center muted" style="margin-top:18px">
+        Already have an account? <a href="/login" style="color:var(--indigo); font-weight:600">Log in</a>
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="<%= lang || 'en' %>">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title ? title + ' · BeyondArk' : 'BeyondArk' %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="<%= assetBase %>/css/style.css" />
+</head>
+<body>
+  <%- include('partials/navbar') %>
+  <%- include('partials/flash') %>
+  <main>
+    <%- body %>
+  </main>
+  <%- include('partials/footer') %>
+  <script src="<%= assetBase %>/js/main.js"></script>
+</body>
+</html>

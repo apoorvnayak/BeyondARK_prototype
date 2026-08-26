@@ -1,0 +1,54 @@
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h1>Discover local experiences</h1>
+        <p>All hosts are identity-verified and every price shown is the full price.</p>
+      </div>
+    </div>
+
+    <form class="filter-bar" method="GET" action="/tourist">
+      <input type="text" name="q" placeholder="Search experiences..." value="<%= q || '' %>" />
+      <select name="category">
+        <option value="">All categories</option>
+        <% categories.forEach(function(c) { %>
+          <option value="<%= c %>" <%= category === c ? 'selected' : '' %>><%= c %></option>
+        <% }) %>
+      </select>
+      <input type="text" name="city" placeholder="City" value="<%= city || '' %>" />
+      <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
+    </form>
+
+    <% if (experiences.length === 0) { %>
+      <div class="empty-state">
+        <p>No experiences match those filters yet. Try clearing them.</p>
+      </div>
+    <% } else { %>
+      <div class="card-grid">
+        <% experiences.forEach(function(exp) { %>
+          <a class="exp-card" href="/tourist/experience/<%= exp.id %>">
+            <div class="exp-card-img">
+              <% if (exp.images && exp.images[0]) { %>
+                <img src="<%= exp.images[0] %>" alt="<%= exp.title %>" />
+              <% } else { %>
+                <span><%= exp.category || 'Local Experience' %></span>
+              <% } %>
+            </div>
+            <div class="exp-card-body">
+              <span class="exp-category"><%= exp.category || 'Experience' %></span>
+              <h3><%= exp.title %></h3>
+              <p><%= (exp.story || '').slice(0, 90) %>&hellip;</p>
+              <% if (exp.provider && exp.provider.providerProfile && exp.provider.providerProfile.verificationStatus === 'verified') { %>
+                <%- include('../partials/verified-badge') %>
+              <% } %>
+              <div class="exp-meta">
+                <span><%= exp.location && exp.location.city ? exp.location.city : '' %></span>
+                <span class="exp-price">₹<%= exp.price %> <small><%= exp.priceUnit %></small></span>
+              </div>
+            </div>
+          </a>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>

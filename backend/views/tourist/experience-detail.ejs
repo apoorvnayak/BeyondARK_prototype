@@ -1,0 +1,72 @@
+<section class="section">
+  <div class="wrap detail-grid">
+    <div>
+      <span class="exp-category"><%= experience.category || 'Experience' %></span>
+      <h1 class="mt-0"><%= experience.title %></h1>
+      <% if (experience.provider.providerProfile && experience.provider.providerProfile.verificationStatus === 'verified') { %>
+        <%- include('../partials/verified-badge') %>
+      <% } %>
+
+      <div class="detail-hero-img" style="margin-top:18px">
+        <% if (experience.images && experience.images[0]) { %>
+          <img src="<%= experience.images[0] %>" alt="<%= experience.title %>" />
+        <% } else { %>
+          <span><%= experience.category || 'Local Experience' %></span>
+        <% } %>
+      </div>
+
+      <div class="story-block">
+        <h3>The story behind it</h3>
+        <p><%= experience.story %></p>
+        <% if (experience.translations && experience.translations.hi && experience.translations.hi.story) { %>
+          <p class="muted"><em>हिंदी:</em> <%= experience.translations.hi.story %></p>
+        <% } %>
+      </div>
+
+      <h3>Hosted by</h3>
+      <p><%= experience.provider.name %><% if (experience.provider.providerProfile && experience.provider.providerProfile.bio) { %> — <%= experience.provider.providerProfile.bio %><% } %></p>
+
+      <h3>Location</h3>
+      <p><%= experience.location.address %><% if (experience.location.city) { %>, <%= experience.location.city %><% } %></p>
+      <div class="map-frame"><div id="map"></div></div>
+      <script id="map-config" type="application/json">
+        <%- JSON.stringify({ token: mapboxToken, lat: experience.location.lat, lng: experience.location.lng, name: experience.title }) %>
+      </script>
+
+      <% if (bookings && bookings.length) { %>
+        <hr class="divider" />
+        <h3>Your requests for this experience</h3>
+        <% bookings.forEach(function(b) { %>
+          <div class="booking-card">
+            <div class="booking-card-head">
+              <div>
+                <strong><%= b.requestedDate %> at <%= b.requestedTime %></strong>
+                <p class="muted" style="margin:0">Status</p>
+              </div>
+              <span class="pill pill-<%= b.status === 'requested' ? 'pending' : b.status %>"><%= b.status.replace('_', ' ') %></span>
+            </div>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+
+    <aside class="booking-box">
+      <div class="price-line">
+        <strong>₹<%= experience.price %></strong>
+        <span class="muted"><%= experience.priceUnit %></span>
+      </div>
+      <p class="price-note">Transparent pricing — no hidden charges.<% if (experience.duration) { %> Duration: <%= experience.duration %>.<% } %></p>
+
+      <form action="/tourist/experience/<%= experience.id %>/book" method="POST">
+        <label for="date">Preferred date</label>
+        <input type="date" id="date" name="date" required />
+        <label for="time">Preferred time</label>
+        <input type="time" id="time" name="time" required />
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-block">Request booking</button>
+        </div>
+      </form>
+      <p class="field-hint">The artisan will confirm your date &amp; time, or suggest another slot.</p>
+    </aside>
+  </div>
+</section>

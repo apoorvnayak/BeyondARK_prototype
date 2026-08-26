@@ -1,0 +1,28 @@
+<section class="section">
+  <div class="wrap">
+    <div class="form-card">
+      <h2 class="text-center">Welcome back</h2>
+      <p class="text-center muted">Log in to continue to BeyondArk.</p>
+
+      <% if (googleEnabled) { %>
+        <a href="/auth/google" class="btn btn-outline btn-block">Continue with Google</a>
+        <hr class="divider" />
+      <% } %>
+
+      <form action="/login" method="POST">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        </div>
+      </form>
+      <p class="text-center muted" style="margin-top:18px">
+        New here? <a href="/signup" style="color:var(--indigo); font-weight:600">Create an account</a>
+      </p>
+    </div>
+  </div>
+</section>

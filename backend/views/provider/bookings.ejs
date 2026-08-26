@@ -1,0 +1,46 @@
+<section class="section">
+  <div class="wrap">
+    <h1>Booking requests</h1>
+
+    <% if (bookings.length === 0) { %>
+      <div class="empty-state"><p>No booking requests yet.</p></div>
+    <% } else { %>
+      <% bookings.forEach(function(b) { %>
+        <div class="booking-card">
+          <div class="booking-card-head">
+            <div>
+              <strong><%= b.experience.title %></strong>
+              <p class="muted" style="margin:2px 0 0"><%= b.tourist.name %> (<%= b.tourist.email %>) · <%= b.requestedDate %> at <%= b.requestedTime %></p>
+            </div>
+            <span class="pill pill-<%= b.status === 'requested' || b.status === 'provider_countered' ? 'pending' : b.status %>">
+              <%= b.status.replace('_', ' ') %>
+            </span>
+          </div>
+
+          <% if (b.status === 'requested') { %>
+            <div class="booking-actions">
+              <form action="/provider/bookings/<%= b.id %>/accept" method="POST">
+                <button type="submit" class="btn btn-secondary btn-sm">Accept</button>
+              </form>
+            </div>
+            <form action="/provider/bookings/<%= b.id %>/counter" method="POST" class="counter-form">
+              <div class="field">
+                <label>Suggest a different date</label>
+                <input type="date" name="counterDate" required />
+              </div>
+              <div class="field">
+                <label>Time</label>
+                <input type="time" name="counterTime" required />
+              </div>
+              <button type="submit" class="btn btn-outline btn-sm">Suggest instead</button>
+            </form>
+          <% } %>
+
+          <% if (b.status === 'provider_countered') { %>
+            <p class="muted" style="margin-top:12px">You suggested <%= b.counterDate %> at <%= b.counterTime %> — waiting on the traveller.</p>
+          <% } %>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</section>

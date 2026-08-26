@@ -1,0 +1,78 @@
+<section class="section">
+  <div class="wrap">
+    <h1>Review queue</h1>
+    <p class="muted">Verify artisan identities and approve experiences before they go live.</p>
+
+    <div class="section-head" style="margin-top:30px">
+      <h2 style="margin:0">Provider verifications</h2>
+    </div>
+    <% if (pendingProviders.length === 0) { %>
+      <div class="empty-state"><p>No providers waiting on verification.</p></div>
+    <% } else { %>
+      <% pendingProviders.forEach(function(p) { %>
+        <div class="booking-card">
+          <div class="booking-card-head">
+            <div>
+              <strong><%= p.name %></strong>
+              <p class="muted" style="margin:2px 0 0"><%= p.email %> · <%= p.providerProfile.craft %> · <%= p.providerProfile.city %></p>
+              <p class="muted" style="margin:2px 0 0">Aadhaar ending <%= p.providerProfile.aadhaarLast4 %> · Phone <%= p.providerProfile.phone %></p>
+              <% if (p.providerProfile.bio) { %><p style="margin:6px 0 0"><%= p.providerProfile.bio %></p><% } %>
+            </div>
+            <span class="pill pill-pending">pending review</span>
+          </div>
+
+          <% if (p.providerProfile.aadhaarDocUrl) { %>
+            <div class="detail-hero-img" style="max-width:260px; aspect-ratio:4/3; margin-top:12px">
+              <img src="<%= p.providerProfile.aadhaarDocUrl %>" alt="ID document for <%= p.name %>" />
+            </div>
+          <% } %>
+
+          <div class="booking-actions">
+            <form action="/admin/providers/<%= p.id %>/verify" method="POST">
+              <button type="submit" class="btn btn-secondary btn-sm">Verify</button>
+            </form>
+          </div>
+          <form action="/admin/providers/<%= p.id %>/reject" method="POST" class="counter-form">
+            <div class="field">
+              <label>Reason (sent to artisan)</label>
+              <input type="text" name="note" placeholder="e.g. Document photo unclear, please re-upload" />
+            </div>
+            <button type="submit" class="btn btn-danger btn-sm">Send back</button>
+          </form>
+        </div>
+      <% }) %>
+    <% } %>
+
+    <div class="section-head" style="margin-top:44px">
+      <h2 style="margin:0">Experience approvals</h2>
+    </div>
+    <% if (pendingExperiences.length === 0) { %>
+      <div class="empty-state"><p>No experiences waiting on review.</p></div>
+    <% } else { %>
+      <% pendingExperiences.forEach(function(e) { %>
+        <div class="booking-card">
+          <div class="booking-card-head">
+            <div>
+              <strong><%= e.title %></strong>
+              <p class="muted" style="margin:2px 0 0">by <%= e.provider.name %> · <%= e.category %> · ₹<%= e.price %> <%= e.priceUnit %></p>
+              <p style="margin:8px 0 0"><%= (e.story || '').slice(0, 200) %><%= e.story && e.story.length > 200 ? '…' : '' %></p>
+            </div>
+            <span class="pill pill-pending">pending review</span>
+          </div>
+          <div class="booking-actions">
+            <form action="/admin/experiences/<%= e.id %>/publish" method="POST">
+              <button type="submit" class="btn btn-secondary btn-sm">Publish</button>
+            </form>
+          </div>
+          <form action="/admin/experiences/<%= e.id %>/reject" method="POST" class="counter-form">
+            <div class="field">
+              <label>Reason (sent to artisan)</label>
+              <input type="text" name="note" placeholder="e.g. Please clarify what's included in the price" />
+            </div>
+            <button type="submit" class="btn btn-danger btn-sm">Send back</button>
+          </form>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</section>

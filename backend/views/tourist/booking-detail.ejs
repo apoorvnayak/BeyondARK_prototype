@@ -1,0 +1,74 @@
+<section class="section">
+  <div class="wrap" style="max-width:640px">
+    <a href="/tourist/bookings" class="muted" style="font-size:0.85rem">&larr; All bookings</a>
+    <h1 style="margin-top:10px"><%= booking.experience.title %></h1>
+    <p class="muted">Hosted by <%= booking.provider.name %></p>
+
+    <div class="booking-card">
+      <div class="booking-card-head">
+        <div>
+          <strong>Requested: <%= booking.requestedDate %> at <%= booking.requestedTime %></strong>
+        </div>
+        <span class="pill pill-<%= booking.status === 'requested' || booking.status === 'provider_countered' ? 'pending' : booking.status %>">
+          <%= booking.status.replace('_', ' ') %>
+        </span>
+      </div>
+
+      <% if (booking.status === 'requested') { %>
+        <p class="muted" style="margin-top:14px">Waiting for the artisan to review your request.</p>
+      <% } %>
+
+      <% if (booking.status === 'provider_countered') { %>
+        <hr class="divider" />
+        <p><strong>The artisan suggested a different slot:</strong> <%= booking.counterDate %> at <%= booking.counterTime %></p>
+        <div class="booking-actions">
+          <form action="/tourist/bookings/<%= booking.id %>/accept-counter" method="POST">
+            <button type="submit" class="btn btn-secondary">Accept new time</button>
+          </form>
+          <form action="/tourist/bookings/<%= booking.id %>/reject-counter" method="POST">
+            <button type="submit" class="btn btn-danger">Decline &amp; cancel</button>
+          </form>
+        </div>
+      <% } %>
+
+      <% if (booking.status === 'confirmed') { %>
+        <hr class="divider" />
+        <p>Your booking is confirmed. Enjoy the experience!</p>
+        <form action="/tourist/bookings/<%= booking.id %>/attend" method="POST">
+          <button type="submit" class="btn btn-secondary">I attended this experience</button>
+        </form>
+      <% } %>
+
+      <% if (booking.status === 'completed') { %>
+        <hr class="divider" />
+        <h3>Rate your experience</h3>
+        <form action="/tourist/bookings/<%= booking.id %>/review" method="POST">
+          <div class="star-input">
+            <input type="hidden" name="rating" value="5" />
+            <span class="star filled" data-v="1">&#9733;</span>
+            <span class="star filled" data-v="2">&#9733;</span>
+            <span class="star filled" data-v="3">&#9733;</span>
+            <span class="star filled" data-v="4">&#9733;</span>
+            <span class="star filled" data-v="5">&#9733;</span>
+          </div>
+          <label for="comment">Your review</label>
+          <textarea id="comment" name="comment" placeholder="Share how the experience went..."></textarea>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Submit review</button>
+          </div>
+        </form>
+      <% } %>
+
+      <% if (booking.status === 'reviewed') { %>
+        <hr class="divider" />
+        <h3>Your review</h3>
+        <div class="stars"><%= '★'.repeat(booking.rating) %><span class="muted"><%= '★'.repeat(5 - booking.rating) %></span></div>
+        <p><%= booking.reviewComment %></p>
+      <% } %>
+
+      <% if (booking.status === 'cancelled') { %>
+        <p class="muted" style="margin-top:14px">This booking was cancelled.</p>
+      <% } %>
+    </div>
+  </div>
+</section>

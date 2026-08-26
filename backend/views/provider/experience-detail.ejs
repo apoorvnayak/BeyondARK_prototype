@@ -1,0 +1,25 @@
+<section class="section">
+  <div class="wrap" style="max-width:720px">
+    <a href="/provider" class="muted" style="font-size:0.85rem">&larr; Dashboard</a>
+    <div class="section-head" style="margin-top:10px">
+      <h1 style="margin:0"><%= experience.title %></h1>
+      <span class="pill pill-<%= experience.status === 'published' ? 'confirmed' : (experience.status === 'rejected' ? 'cancelled' : 'pending') %>">
+        <%= experience.status.replace('_',' ') %>
+      </span>
+    </div>
+
+    <% if (experience.status === 'rejected' && experience.reviewNote) { %>
+      <div class="status-banner rejected"><strong>Admin feedback:</strong>&nbsp;<%= experience.reviewNote %></div>
+    <% } %>
+    <% if (experience.status === 'pending_review') { %>
+      <div class="status-banner pending"><p style="margin:0">Awaiting admin review before it goes live.</p></div>
+    <% } %>
+    <% if (experience.status === 'published') { %>
+      <div class="status-banner verified"><p style="margin:0">Live and visible to travellers.</p></div>
+    <% } %>
+
+    <p class="muted"><%= experience.category %> · <%= experience.location.city %></p>
+    <p><%= experience.story %></p>
+    <p><strong>₹<%= experience.price %></strong> <%= experience.priceUnit %><% if (experience.duration) { %> · <%= experience.duration %><% } %></p>
+  </div>
+</section>

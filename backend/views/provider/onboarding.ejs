@@ -1,0 +1,47 @@
+<section class="section">
+  <div class="wrap">
+    <div class="form-card form-wide">
+      <h2 class="text-center">Tell us about your craft</h2>
+      <p class="text-center muted">This information + a quick identity check is reviewed by our team before you can publish experiences.</p>
+
+      <% if (currentUser.providerProfile && currentUser.providerProfile.verificationStatus === 'rejected') { %>
+        <div class="status-banner rejected">
+          <strong>Your last submission needs changes:</strong>&nbsp;<%= currentUser.providerProfile.verificationNote %>
+        </div>
+      <% } %>
+
+      <form action="/provider/onboarding" method="POST" enctype="multipart/form-data">
+        <label for="craft">Craft / experience type</label>
+        <input type="text" id="craft" name="craft" placeholder="e.g. Blue Pottery, Heritage Walk, Pahari Cooking" value="<%= currentUser.providerProfile ? currentUser.providerProfile.craft || '' : '' %>" required />
+
+        <label for="bio">Short bio</label>
+        <textarea id="bio" name="bio" placeholder="A couple of sentences about you and your craft."><%= currentUser.providerProfile ? currentUser.providerProfile.bio || '' : '' %></textarea>
+
+        <div class="field-row">
+          <div>
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" value="<%= currentUser.providerProfile ? currentUser.providerProfile.city || '' : '' %>" required />
+          </div>
+          <div>
+            <label for="phone">Phone number</label>
+            <input type="tel" id="phone" name="phone" value="<%= currentUser.providerProfile ? currentUser.providerProfile.phone || '' : '' %>" required />
+          </div>
+        </div>
+
+        <fieldset>
+          <legend>Aadhaar-based identity verification</legend>
+          <label for="aadhaarLast4">Last 4 digits of Aadhaar number</label>
+          <input type="text" id="aadhaarLast4" name="aadhaarLast4" maxlength="4" pattern="\d{4}" placeholder="1234" required />
+          <p class="field-hint">Prototype note: full e-KYC requires UIDAI AUA/KUA integration. For this demo we collect the last 4 digits plus a document photo for manual admin review.</p>
+
+          <label for="aadhaarDoc">Upload ID document photo</label>
+          <input type="file" id="aadhaarDoc" name="aadhaarDoc" accept="image/*" <%= (!currentUser.providerProfile || !currentUser.providerProfile.aadhaarDocUrl) ? 'required' : '' %> />
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-block">Submit for review</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

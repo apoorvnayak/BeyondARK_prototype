@@ -1,0 +1,43 @@
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="/" class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="34" height="34">
+          <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 4"/>
+          <path d="M24 12 L30 22 L24 36 L18 22 Z" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="brand-word">BeyondArk</span>
+    </a>
+
+    <nav class="main-nav">
+      <a href="/">Discover</a>
+      <a href="/about">About</a>
+
+      <% if (currentUser) { %>
+        <% if (currentUser.role === 'tourist') { %>
+          <a href="/tourist/bookings">My Bookings</a>
+        <% } else if (currentUser.role === 'provider') { %>
+          <a href="/provider">Dashboard</a>
+        <% } else if (currentUser.role === 'admin') { %>
+          <a href="/admin">Review Queue</a>
+        <% } %>
+
+        <form action="/language/<%= lang === 'hi' ? 'en' : 'hi' %>" method="POST" class="lang-form">
+          <button type="submit" class="lang-toggle"><%= lang === 'hi' ? 'EN' : 'हिं' %></button>
+        </form>
+
+        <span class="nav-user"><%= currentUser.name.split(' ')[0] %></span>
+        <form action="/logout" method="POST">
+          <button type="submit" class="btn btn-ghost btn-sm">Log out</button>
+        </form>
+      <% } else { %>
+        <form action="/language/<%= lang === 'hi' ? 'en' : 'hi' %>" method="POST" class="lang-form">
+          <button type="submit" class="lang-toggle"><%= lang === 'hi' ? 'EN' : 'हिं' %></button>
+        </form>
+        <a href="/login" class="btn btn-ghost btn-sm">Log in</a>
+        <a href="/signup" class="btn btn-primary btn-sm">Join</a>
+      <% } %>
+    </nav>
+  </div>
+</header>

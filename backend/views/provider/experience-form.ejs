@@ -1,0 +1,78 @@
+<section class="section">
+  <div class="wrap">
+    <div class="form-card form-wide">
+      <h2 class="text-center">Create an experience</h2>
+      <p class="text-center muted">This goes to admin review before it's visible to travellers.</p>
+
+      <form action="/provider/experiences" method="POST" enctype="multipart/form-data">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" placeholder="e.g. Traditional Blue Pottery Workshop" required />
+
+        <label for="category">Category</label>
+        <input type="text" id="category" name="category" placeholder="e.g. Pottery, Weaving, Cooking, Heritage Walk" required />
+
+        <label for="story">Story behind the craft &amp; experience</label>
+        <textarea id="story" name="story" placeholder="What will guests do? What makes this authentic?" required></textarea>
+
+        <fieldset>
+          <legend>Transparent pricing</legend>
+          <div class="field-row">
+            <div>
+              <label for="price">Price (₹)</label>
+              <input type="number" id="price" name="price" min="0" required />
+            </div>
+            <div>
+              <label for="priceUnit">Per</label>
+              <select id="priceUnit" name="priceUnit">
+                <option value="per person">Per person</option>
+                <option value="per group">Per group</option>
+                <option value="per session">Per session</option>
+              </select>
+            </div>
+          </div>
+          <label for="duration">Duration</label>
+          <input type="text" id="duration" name="duration" placeholder="e.g. 2 hours" />
+          <p class="field-hint">No hidden charges — this is the full amount guests will pay.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Location (Integrated Map Feature)</legend>
+          <label for="address">Address / meeting point</label>
+          <input type="text" id="address" name="address" required />
+          <div class="field-row">
+            <div>
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" required />
+            </div>
+          </div>
+          <div class="field-row">
+            <div>
+              <label for="lat">Latitude</label>
+              <input type="text" id="lat" name="lat" placeholder="e.g. 26.9124" />
+            </div>
+            <div>
+              <label for="lng">Longitude</label>
+              <input type="text" id="lng" name="lng" placeholder="e.g. 75.7873" />
+            </div>
+          </div>
+          <p class="field-hint">Tip: right-click a location on Google Maps to copy its coordinates.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Multilingual info (Hindi)</legend>
+          <label for="titleHi">Title (हिंदी)</label>
+          <input type="text" id="titleHi" name="titleHi" />
+          <label for="storyHi">Description (हिंदी)</label>
+          <textarea id="storyHi" name="storyHi"></textarea>
+        </fieldset>
+
+        <label for="images">Photos</label>
+        <input type="file" id="images" name="images" accept="image/*" multiple />
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-block">Submit for admin review</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

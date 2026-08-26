@@ -1,0 +1,83 @@
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="hero-eyebrow">Team BeyondArk · SIH 2026 · PS 50</span>
+      <h1>Meet the makers behind every <span>authentic</span> local experience.</h1>
+      <p>BeyondArk connects travellers with Aadhaar-verified artisans and community-led
+      workshops — with transparent pricing, mapped locations, and information in your
+      language, so discovering the real place is as easy as booking a room.</p>
+      <div class="hero-actions">
+        <a href="/signup" class="btn btn-primary">Find an experience</a>
+        <a href="/signup" class="btn btn-outline">Become a verified artisan</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>100%</strong><span>ID-verified hosts</span></div>
+        <div><strong>0</strong><span>Hidden fees</span></div>
+        <div><strong>2</strong><span>Languages &amp; counting</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg class="hero-motif" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="70" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 6"/>
+        <circle cx="100" cy="100" r="46" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M100 54 L112 88 L146 100 L112 112 L100 146 L88 112 L54 100 L88 88 Z" stroke="currentColor" stroke-width="1.4"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Featured experiences</h2>
+        <p>Every listing below has passed identity verification and admin review before going live.</p>
+      </div>
+      <a href="/signup" class="btn btn-secondary btn-sm">Browse all</a>
+    </div>
+
+    <% if (experiences.length === 0) { %>
+      <div class="empty-state">
+        <p>No experiences published yet — check back soon, or sign up as an artisan to be the first.</p>
+      </div>
+    <% } else { %>
+      <div class="card-grid">
+        <% experiences.forEach(function(exp) { %>
+          <div class="exp-card">
+            <div class="exp-card-img">
+              <% if (exp.images && exp.images[0]) { %>
+                <img src="<%= exp.images[0] %>" alt="<%= exp.title %>" />
+              <% } else { %>
+                <span><%= exp.category || 'Local Experience' %></span>
+              <% } %>
+            </div>
+            <div class="exp-card-body">
+              <span class="exp-category"><%= exp.category || 'Experience' %></span>
+              <h3><%= exp.title %></h3>
+              <p><%= (exp.story || '').slice(0, 90) %>&hellip;</p>
+              <% if (exp.provider && exp.provider.providerProfile && exp.provider.providerProfile.verificationStatus === 'verified') { %>
+                <%- include('partials/verified-badge') %>
+              <% } %>
+              <div class="exp-meta">
+                <span><%= exp.location && exp.location.city ? exp.location.city : '' %></span>
+                <span class="exp-price">₹<%= exp.price %> <small><%= exp.priceUnit %></small></span>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<section class="section" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <h2 class="text-center">How it works</h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><h4>Discover</h4><p>Browse verified artisans and experiences near you.</p></div>
+      <div class="step"><div class="step-num">2</div><h4>Request</h4><p>Pick a date &amp; time — the artisan confirms or suggests another slot.</p></div>
+      <div class="step"><div class="step-num">3</div><h4>Attend</h4><p>Meet the artisan and take part in the real experience.</p></div>
+      <div class="step"><div class="step-num">4</div><h4>Review</h4><p>Leave a rating to help the next traveller.</p></div>
+    </div>
+  </div>
+</section>

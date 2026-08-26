@@ -1,0 +1,26 @@
+<section class="section">
+  <div class="wrap">
+    <h1>My bookings</h1>
+
+    <% if (bookings.length === 0) { %>
+      <div class="empty-state">
+        <p>No bookings yet.</p>
+        <a href="/tourist" class="btn btn-primary" style="margin-top:14px">Discover experiences</a>
+      </div>
+    <% } else { %>
+      <% bookings.forEach(function(b) { %>
+        <a class="booking-card" style="display:block" href="/tourist/bookings/<%= b.id %>">
+          <div class="booking-card-head">
+            <div>
+              <strong><%= b.experience.title %></strong>
+              <p class="muted" style="margin:2px 0 0">with <%= b.provider.name %> · <%= b.requestedDate %> at <%= b.requestedTime %></p>
+            </div>
+            <span class="pill pill-<%= b.status === 'requested' ? 'pending' : (b.status === 'provider_countered' ? 'pending' : b.status) %>">
+              <%= b.status.replace('_', ' ') %>
+            </span>
+          </div>
+        </a>
+      <% }) %>
+    <% } %>
+  </div>
+</section>
