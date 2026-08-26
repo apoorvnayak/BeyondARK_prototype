@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BeyondArk — Authentic Local Experiences &amp; Artisans</title>
+  <meta name="description" content="BeyondArk connects travellers with Aadhaar-verified local artisans and community-led experiences — transparent pricing, mapped locations, multilingual info." />
+
+  <!--
+    BACKEND_URL: change this to wherever the BeyondArk backend is deployed
+    (see ../backend/README.md). Locally this defaults to port 3000.
+    The actual app (login, browsing, bookings, etc.) is server-rendered
+    there — this page is a static splash/landing page only.
+  -->
+  <script>window.BEYONDARK_BACKEND_URL = "http://localhost:3000";</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a href="#" class="brand launch-link">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="34" height="34">
+            <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 4"/>
+            <path d="M24 12 L30 22 L24 36 L18 22 Z" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand-word">BeyondArk</span>
+      </a>
+      <nav class="main-nav">
+        <a href="#how-it-works">How it works</a>
+        <a href="#promise">Our promise</a>
+        <a href="#" class="btn btn-primary btn-sm launch-link">Launch app</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="hero-eyebrow">Team BeyondArk · SIH 2026 · PS 50</span>
+          <h1>Meet the makers behind every <span>authentic</span> local experience.</h1>
+          <p>BeyondArk connects travellers with Aadhaar-verified artisans and community-led
+          workshops — with transparent pricing, mapped locations, and information in your
+          language, so discovering the real place is as easy as booking a room.</p>
+          <div class="hero-actions">
+            <a href="#" class="btn btn-primary launch-link">Find an experience</a>
+            <a href="#" class="btn btn-outline launch-link">Become a verified artisan</a>
+          </div>
+          <div class="hero-stats">
+            <div><strong>100%</strong><span>ID-verified hosts</span></div>
+            <div><strong>0</strong><span>Hidden fees</span></div>
+            <div><strong>2</strong><span>Languages &amp; counting</span></div>
+          </div>
+        </div>
+        <div class="hero-art">
+          <svg class="hero-motif" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="70" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 6"/>
+            <circle cx="100" cy="100" r="46" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M100 54 L112 88 L146 100 L112 112 L100 146 L88 112 L54 100 L88 88 Z" stroke="currentColor" stroke-width="1.4"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <div class="wrap">
+        <h2 class="text-center">How it works</h2>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><h4>Discover</h4><p>Browse verified artisans and experiences near you.</p></div>
+          <div class="step"><div class="step-num">2</div><h4>Request</h4><p>Pick a date &amp; time — the artisan confirms or suggests another slot.</p></div>
+          <div class="step"><div class="step-num">3</div><h4>Attend</h4><p>Meet the artisan and take part in the real experience.</p></div>
+          <div class="step"><div class="step-num">4</div><h4>Review</h4><p>Leave a rating to help the next traveller.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="promise" style="border-top:1px solid var(--line)">
+      <div class="wrap" style="max-width:720px">
+        <h2 class="text-center">What we promise</h2>
+        <div class="steps" style="flex-wrap:wrap">
+          <div class="step"><h4>Verified hosts</h4><p>Aadhaar-based identity checks reviewed by our team.</p></div>
+          <div class="step"><h4>Clear pricing</h4><p>No hidden charges — the price you see is the price you pay.</p></div>
+          <div class="step"><h4>Easy discovery</h4><p>An integrated map and search make finding an experience simple.</p></div>
+          <div class="step"><h4>Multilingual</h4><p>Key experience details available in more than one language.</p></div>
+        </div>
+        <div class="text-center" style="margin-top:20px">
+          <a href="#" class="btn btn-primary launch-link">Launch the app</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div><strong>BeyondArk</strong> · SIH 2026 · PS 50 — Digital Platform for Authentic Local Experiences and Artisans</div>
+      <div class="footer-links">
+        <span>Verified Artisans</span>
+        <span>Transparent Pricing</span>
+        <span>Multilingual</span>
+        <span>Mapped Locations</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Point every "launch" link/button at the configured backend.
+    document.querySelectorAll(".launch-link").forEach(function (el) {
+      el.href = window.BEYONDARK_BACKEND_URL || "http://localhost:3000";
+    });
+  </script>
+  <script src="./js/main.js"></script>
+</body>
+</html>
