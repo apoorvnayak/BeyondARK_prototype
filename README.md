@@ -5,7 +5,7 @@
 ```
 beyondark/
 ├── backend/    Express + EJS + MongoDB app (all logic, routes, views, auth, DB)
-└── frontend/   Static CSS/JS assets, deployable on their own to a CDN
+└── frontend/   Static CSS/JS/HTML assets, deployable on their own to a CDN
 ```
 
 ## Why it's split this way
